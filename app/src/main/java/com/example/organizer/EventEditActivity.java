@@ -2,34 +2,37 @@ package com.example.organizer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class EventEditActivity extends AppCompatActivity {
     private EditText eventNameET;
-    private TextView eventTimeTV;
     private DatePickerDialog datePickerDialog;
+    private Button timeButton;
     private Button dateButton;
 
-    private LocalTime time;
+    private LocalTime time = LocalTime.now();
     private LocalDate date = LocalDate.now();
+    int hour, minute;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ISO_LOCAL_DATE;
+    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ISO_LOCAL_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +41,15 @@ public class EventEditActivity extends AppCompatActivity {
         initWidgets();
         time = LocalTime.now();
         initDatePicker();
-        dateButton.setText(date.format(formatter));
-        eventTimeTV.setText("Time: " + CalendarUtils.formattedTime(time));
+        dateButton.setText(date.format(dateFormatter));
+        timeButton.setText(time.format(timeFormatter));
+
 
     }
 
     private void initWidgets() {
         eventNameET = findViewById(R.id.eventNameET);
-        eventTimeTV = findViewById(R.id.eventTimeTV);
+        timeButton = findViewById(R.id.timeButton);
         dateButton = findViewById(R.id.datePickerButton);
     }
 
@@ -71,7 +75,7 @@ public class EventEditActivity extends AppCompatActivity {
                 }
                 date = LocalDate.parse(year+"-"+month+"-"+day,dateFormat);
 
-                dateButton.setText(date.format(formatter));
+                dateButton.setText(date.format(dateFormatter));
             }
         };
 
@@ -91,6 +95,38 @@ public class EventEditActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+
+    public void popTimePicker(View view)
+    {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
+            {
+                String hour;
+                String minute;
+                if(selectedHour<10){
+                    hour = "0"+Integer.toString(selectedHour);
+                }else{
+                    hour = Integer.toString(selectedHour);
+                }
+                if(selectedMinute<10){
+                    minute = "0"+Integer.toString(selectedMinute);
+                }else{
+                    minute = Integer.toString(selectedMinute);
+                }
+                time = LocalTime.parse(hour+ ":" + minute,timeFormat);
+                timeButton.setText(time.format(timeFormatter));
+            }
+        };
+
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, time.getHour(), time.getMinute(), true);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+    }
+
     public void saveEventAction(View view) {
         SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
         String eventName = eventNameET.getText().toString();
@@ -99,6 +135,4 @@ public class EventEditActivity extends AppCompatActivity {
         sqLiteManager.addNoteToDatabase(newEvent);
         finish();
     }
-
-
 }
