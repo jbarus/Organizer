@@ -2,7 +2,9 @@ package com.example.organizer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -28,7 +30,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         emailEditText=findViewById(R.id.email_edit_text);
         passwordEditText=findViewById(R.id.password_edit_text);
         confirmPasswordEditText=findViewById(R.id.confirm_password_edit_text);
@@ -37,7 +39,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         loginBtnTextView=findViewById(R.id.login_text_view_btn);
 
         createAccountBtn.setOnClickListener(v-> createAccount());
-        loginBtnTextView.setOnClickListener(v-> finish());
+        loginBtnTextView.setOnClickListener(v-> startActivity(new Intent(CreateAccountActivity.this,LoginActivity.class)));
     }
 
     void createAccount(){

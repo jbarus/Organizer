@@ -31,6 +31,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         setContentView(R.layout.activity_week_view);
         initWidgets();
         setWeekView();
+        loadFromDBToMemory();
     }
 
     private void initWidgets()
@@ -39,6 +40,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         monthYearText = findViewById(R.id.monthYearTV);
         eventRecyclerView = findViewById(R.id.eventRecyclerView);
     }
+
+    private void loadFromDBToMemory()
+    {
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
+        sqLiteManager.populateNoteListArray();
+    }
+
 
     private void setWeekView()
     {
