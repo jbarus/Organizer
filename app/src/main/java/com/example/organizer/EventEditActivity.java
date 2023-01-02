@@ -7,10 +7,14 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class EventEditActivity extends AppCompatActivity {
+public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
     private Button timeButton;
@@ -43,7 +47,11 @@ public class EventEditActivity extends AppCompatActivity {
         initDatePicker();
         dateButton.setText(date.format(dateFormatter));
         timeButton.setText(time.format(timeFormatter));
-
+        Spinner spinner_flag=findViewById(R.id.spinner_flag);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Flagi, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner_flag.setAdapter(adapter);
+        spinner_flag.setOnItemSelectedListener(this);
 
     }
 
@@ -63,6 +71,7 @@ public class EventEditActivity extends AppCompatActivity {
                 String year = Integer.toString(y);
                 String month;
                 String day;
+                
                 if((m+1)<10){
                      month ="0" + Integer.toString(m+1);
                 }else{
@@ -134,5 +143,16 @@ public class EventEditActivity extends AppCompatActivity {
         Event.eventsList.add(newEvent);
         sqLiteManager.addNoteToDatabase(newEvent);
         finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,55 +14,73 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="Name:"
-        android:textSize="20sp"
         android:textAlignment="center"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/eventNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="20sp"
         android:ems="10"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/datePickerButton"
+        style="?android:spinnerStyle"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="JAN 01 2020"
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        style="?android:spinnerStyle"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:onClick="openDatePicker"
+        android:text="JAN 01 2020"
         android:textAlignment="center"
-        android:onClick="openDatePicker"/>
+        android:textColor="@color/black"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/timeButton"
-        android:onClick="popTimePicker"
+        style="?android:spinnerStyle"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="Select Time"
-        style="?android:spinnerStyle"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:onClick="popTimePicker"
+        android:text="Select Time"
         android:textAlignment="center"
-        android:textSize="30sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="30sp" />
 
     <Button
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:onClick="saveEventAction"
         android:text="Save"
         android:textColor="@color/purple_200"
-        android:background="@null"
-        android:textStyle="bold"
-        android:onClick="saveEventAction"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Spinner
+      android:id="@+id/spinner_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    android:layout_gravity="center"
+
+        />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </HorizontalScrollView>
 
 </LinearLayout>
