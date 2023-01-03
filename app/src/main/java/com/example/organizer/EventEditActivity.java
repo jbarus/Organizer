@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -20,16 +21,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
     private Button timeButton;
     private Button dateButton;
-
+    private TextView flagtextview;
+    private Spinner spinner_flag;
     private LocalTime time = LocalTime.now();
     private LocalDate date = LocalDate.now();
+    private String flag;
     int hour, minute;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
@@ -47,7 +49,7 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
         initDatePicker();
         dateButton.setText(date.format(dateFormatter));
         timeButton.setText(time.format(timeFormatter));
-        Spinner spinner_flag=findViewById(R.id.spinner_flag);
+        spinner_flag=findViewById(R.id.spinner_flag);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Flagi, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner_flag.setAdapter(adapter);
@@ -56,6 +58,7 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void initWidgets() {
+        flagtextview =findViewById(R.id.flagtextview);
         eventNameET = findViewById(R.id.eventNameET);
         timeButton = findViewById(R.id.timeButton);
         dateButton = findViewById(R.id.datePickerButton);
@@ -137,9 +140,10 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     }
 
     public void saveEventAction(View view) {
+
         SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
         String eventName = eventNameET.getText().toString();
-        Event newEvent = new Event(eventName, date, time);
+        Event newEvent = new Event(eventName, date, time,flag);
         Event.eventsList.add(newEvent);
         sqLiteManager.addNoteToDatabase(newEvent);
         finish();
@@ -149,6 +153,9 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
+
+        flag=spinner_flag.getSelectedItem().toString();
+        flagtextview.setText(flag);
     }
 
     @Override

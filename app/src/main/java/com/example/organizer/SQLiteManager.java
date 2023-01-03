@@ -29,6 +29,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String NAME_FIELD = "name";
     private static final String DATE_FIELD = "date";
     private static final String TIME_FIELD = "time";
+    private static final  String FLAG_FIELD= "flag";
 
     @SuppressLint("SimpleDateFormat")
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -63,6 +64,8 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(DATE_FIELD)
                 .append(" TEXT, ")
                 .append(TIME_FIELD)
+                .append(" TEXT, ")
+                .append(FLAG_FIELD)
                 .append(" TEXT)");
 
         sqLiteDatabase.execSQL(sql.toString());
@@ -81,6 +84,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
         contentValues.put(NAME_FIELD, event.getName());
         contentValues.put(DATE_FIELD, getStringFromDate(event.getDate()));
         contentValues.put(TIME_FIELD, getStringFromTime(event.getTime()));
+        contentValues.put(FLAG_FIELD,event.getFlag());
 
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         sqLiteDatabase.close();
@@ -100,9 +104,10 @@ public class SQLiteManager extends SQLiteOpenHelper {
                     String name = result.getString(1);
                     String stringDate = result.getString(2);
                     String stringTime = result.getString(3);
+                    String flag =result.getString(4);
                     LocalDate date = getDateFromString(stringDate);
                     LocalTime time = getTimeFromString(stringTime);
-                    Event event = new Event(name,date,time);
+                    Event event = new Event(name,date,time, flag);
                     Event.eventsList.add(event);
                 }
             }
