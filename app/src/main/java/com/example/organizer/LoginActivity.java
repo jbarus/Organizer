@@ -64,6 +64,10 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        if(!DatabasesManager.wasLoaded){
+                            DatabasesManager.getDataFromFirebase();
+                            DatabasesManager.wasLoaded=true;
+                        }
                         finish();
                     } else {
                         Utility.showToast(LoginActivity.this, "Nie potwierdzony email");

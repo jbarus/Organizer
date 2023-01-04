@@ -141,11 +141,9 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
 
     public void saveEventAction(View view) {
 
-        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
         String eventName = eventNameET.getText().toString();
         Event newEvent = new Event(eventName, date, time,flag);
-        Event.eventsList.add(newEvent);
-        sqLiteManager.addNoteToDatabase(newEvent);
+        DatabasesManager.sendDataToDatabase(newEvent);
         finish();
     }
 

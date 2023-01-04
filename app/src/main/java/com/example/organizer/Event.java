@@ -75,4 +75,6 @@ public class Event {
     public void setFlag(String flag) {
         this.flag = flag;
     }
+
+
 }
