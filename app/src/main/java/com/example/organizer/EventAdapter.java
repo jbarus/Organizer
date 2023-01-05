@@ -1,34 +1,56 @@
 package com.example.organizer;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class EventAdapter extends ArrayAdapter<Event> {
-    public EventAdapter(@NonNull Context context, List<Event> events) {
-        super(context, 0,events);
+public class EventAdapter extends RecyclerView.Adapter<EventViewHolder>
+{
+    private final ArrayList<Event> events;
+    private final OnEventListener onEventListener;
+
+    public EventAdapter(ArrayList<Event> events, OnEventListener onEventListener) {
+        this.events = events;
+        this.onEventListener = onEventListener;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Event event = getItem(position);
+    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.event_cell, parent, false);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = 60;
 
-        if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell, parent, false);
+        return new EventViewHolder(view, onEventListener, events);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
+
+        final Event event = events.get(position);
+        if(event == null)
+            holder.name.setText("");
+        else
+        {
+            holder.name.setText(event.getName()+" "+ CalendarUtils.formattedTime(event.getTime()));
         }
-        TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
 
-        String eventTitle = event.getName()+" "+ CalendarUtils.formattedTime(event.getTime());
-        eventCellTV.setText(eventTitle);
-        return convertView;
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return events.size();
+    }
+
+    public interface OnEventListener{
+        void onEventClick();
     }
 }

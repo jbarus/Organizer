@@ -2,4 +2,10 @@
     <string name="app_name">Organizer</string>
     <string name="forward"><![CDATA[->]]></string>
     <string name="back"><![CDATA[<-]]></string>
+    <string-array name="Flagi">
+        <item>Sport</item>
+        <item>Nauka</item>
+        <item>Zabawa</item>
+    </string-array>
+
 </resources>

@@ -34,11 +34,14 @@ public class Event {
     private String name;
     private LocalDate date;
     private LocalTime time;
+    private String flag;
 
-    public Event(String name, LocalDate date, LocalTime time) {
+    public Event(String name, LocalDate date, LocalTime time, String flag) {
         this.name = name;
         this.date = date;
         this.time = time;
+        this.flag=flag;
+
     }
 
     public String getName() {
@@ -64,4 +67,14 @@ public class Event {
     public void setTime(LocalTime time) {
         this.time = time;
     }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+
 }

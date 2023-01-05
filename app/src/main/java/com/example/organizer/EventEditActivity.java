@@ -2,19 +2,43 @@ package com.example.organizer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
-public class EventEditActivity extends AppCompatActivity {
+public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private EditText eventNameET;
-    private TextView eventDateTV;
-    private TextView eventTimeTV;
+    private DatePickerDialog datePickerDialog;
+    private Button timeButton;
+    private Button dateButton;
+    private TextView flagtextview;
+    private Spinner spinner_flag;
+    private LocalTime time = LocalTime.now();
+    private LocalDate date = LocalDate.now();
+    private String flag;
+    int hour, minute;
 
-    private LocalTime time;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ISO_LOCAL_DATE;
+    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ISO_LOCAL_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,20 +46,118 @@ public class EventEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_edit);
         initWidgets();
         time = LocalTime.now();
-        eventDateTV.setText("Date: " + CalendarUtils.formattedDate(CalendarUtils.selectedDate));
-        eventTimeTV.setText("Time: " + CalendarUtils.formattedTime(time));
+        initDatePicker();
+        dateButton.setText(date.format(dateFormatter));
+        timeButton.setText(time.format(timeFormatter));
+        spinner_flag=findViewById(R.id.spinner_flag);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Flagi, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner_flag.setAdapter(adapter);
+        spinner_flag.setOnItemSelectedListener(this);
+
     }
 
     private void initWidgets() {
+        flagtextview =findViewById(R.id.flagtextview);
         eventNameET = findViewById(R.id.eventNameET);
-        eventDateTV = findViewById(R.id.eventDateTV);
-        eventTimeTV = findViewById(R.id.eventTimeTV);
+        timeButton = findViewById(R.id.timeButton);
+        dateButton = findViewById(R.id.datePickerButton);
+    }
+
+    private void initDatePicker()
+    {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int y, int m, int d)
+            {
+                String year = Integer.toString(y);
+                String month;
+                String day;
+                
+                if((m+1)<10){
+                     month ="0" + Integer.toString(m+1);
+                }else{
+                    month =Integer.toString(m+1);
+                }
+                if(d<10){
+                    day ="0" + Integer.toString(d);
+                }else{
+                    day =Integer.toString(d);
+                }
+                date = LocalDate.parse(year+"-"+month+"-"+day,dateFormat);
+
+                dateButton.setText(date.format(dateFormatter));
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+
+    }
+
+    public void openDatePicker(View view)
+    {
+        datePickerDialog.show();
+    }
+
+
+    public void popTimePicker(View view)
+    {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
+            {
+                String hour;
+                String minute;
+                if(selectedHour<10){
+                    hour = "0"+Integer.toString(selectedHour);
+                }else{
+                    hour = Integer.toString(selectedHour);
+                }
+                if(selectedMinute<10){
+                    minute = "0"+Integer.toString(selectedMinute);
+                }else{
+                    minute = Integer.toString(selectedMinute);
+                }
+                time = LocalTime.parse(hour+ ":" + minute,timeFormat);
+                timeButton.setText(time.format(timeFormatter));
+            }
+        };
+
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, time.getHour(), time.getMinute(), true);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
     }
 
     public void saveEventAction(View view) {
+
         String eventName = eventNameET.getText().toString();
-        Event newEvent = new Event(eventName, CalendarUtils.selectedDate, time);
-        Event.eventsList.add(newEvent);
+        Event newEvent = new Event(eventName, date, time,flag);
+        DatabasesManager.sendDataToDatabase(newEvent);
         finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
+
+        flag=spinner_flag.getSelectedItem().toString();
+        flagtextview.setText(flag);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
