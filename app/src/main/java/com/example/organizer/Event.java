@@ -22,7 +22,7 @@ public class Event {
         ArrayList<Event> events = new ArrayList<>();
 
         for (Event event : eventsList) {
-            int eventHour = event.time.getHour();
+            int eventHour = event.startTime.getHour();
             int cellHour = time.getHour();
             if (event.getDate().equals(date) && eventHour == cellHour)
                 events.add(event);
@@ -33,13 +33,22 @@ public class Event {
 
     private String name;
     private LocalDate date;
-    private LocalTime time;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String flag;
+
+    public Event(String name, LocalDate date, LocalTime startTime, LocalTime endTime, String flag) {
+        this.name = name;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.flag = flag;
+    }
 
     public Event(String name, LocalDate date, LocalTime time, String flag) {
         this.name = name;
         this.date = date;
-        this.time = time;
+        this.startTime = time;
         this.flag=flag;
 
     }
@@ -60,12 +69,12 @@ public class Event {
         this.date = date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
     public String getFlag() {
@@ -76,5 +85,7 @@ public class Event {
         this.flag = flag;
     }
 
+    public LocalTime getEndTime() {return endTime;}
 
+    public void setEndTime(LocalTime endTime) {this.endTime = endTime;}
 }

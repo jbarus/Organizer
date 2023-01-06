@@ -1,11 +1,5 @@
 package com.example.organizer;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DatabasesManager extends AppCompatActivity {
@@ -43,7 +36,7 @@ public class DatabasesManager extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Event newEvent = new Event(dataSnapshot.getKey().toString(),getDateFromString(dataSnapshot.child("Date").getValue().toString()),getTimeFromString(dataSnapshot.child("Time").getValue().toString()),dataSnapshot.child("Flag").getValue().toString());
+                    Event newEvent = new Event(dataSnapshot.getKey().toString(),getDateFromString(dataSnapshot.child("Date").getValue().toString()),getTimeFromString(dataSnapshot.child("StartTime").getValue().toString()),getTimeFromString(dataSnapshot.child("EndTime").getValue().toString()),dataSnapshot.child("Flag").getValue().toString());
                     boolean exist = false;
                     for ( Event event : Event.eventsList){
                         if(newEvent.getName() == event.getName()){
@@ -66,7 +59,8 @@ public class DatabasesManager extends AppCompatActivity {
     public static void sendDataToDatabase(Event newEvent){
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("Date",getStringFromDate(newEvent.getDate()));
-        hashMap.put("Time",getStringFromTime(newEvent.getTime()));
+        hashMap.put("StartTime",getStringFromTime(newEvent.getStartTime()));
+        hashMap.put("EndTime",getStringFromTime(newEvent.getEndTime()));
         hashMap.put("Flag",newEvent.getFlag());
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://organizer-ccfd6-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference myRef = database.getReference();

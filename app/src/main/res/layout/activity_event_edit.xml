@@ -41,13 +41,26 @@
         android:textSize="30sp" />
 
     <Button
-        android:id="@+id/timeButton"
+        android:id="@+id/startingTimeButton"
         style="?android:spinnerStyle"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:onClick="popTimePicker"
+        android:onClick="popStartTimePicker"
+        android:text="Select Time"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/endingTimeButton"
+        style="?android:spinnerStyle"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:onClick="popEndTimePicker"
         android:text="Select Time"
         android:textAlignment="center"
         android:textColor="@color/black"

@@ -38,7 +38,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventViewHolder>
             holder.name.setText("");
         else
         {
-            holder.name.setText(event.getName()+" "+ CalendarUtils.formattedTime(event.getTime()));
+            holder.name.setText(event.getName()+" "+ CalendarUtils.formattedTime(event.getStartTime()));
         }
 
 

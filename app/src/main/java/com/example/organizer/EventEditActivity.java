@@ -25,11 +25,13 @@ import java.util.Calendar;
 public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
-    private Button timeButton;
+    private Button startingTimeButton;
+    private Button endingTimeButton;
     private Button dateButton;
     private TextView flagtextview;
     private Spinner spinner_flag;
-    private LocalTime time = LocalTime.now();
+    private LocalTime startTime = LocalTime.now();
+    private LocalTime endTime = LocalTime.now();
     private LocalDate date = LocalDate.now();
     private String flag;
     int hour, minute;
@@ -45,10 +47,12 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
         initWidgets();
-        time = LocalTime.now();
+        startTime = LocalTime.now();
+        endTime = LocalTime.now();
         initDatePicker();
         dateButton.setText(date.format(dateFormatter));
-        timeButton.setText(time.format(timeFormatter));
+        startingTimeButton.setText(startTime.format(timeFormatter));
+        endingTimeButton.setText(endTime.format(timeFormatter));
         spinner_flag=findViewById(R.id.spinner_flag);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Flagi, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -60,7 +64,8 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     private void initWidgets() {
         flagtextview =findViewById(R.id.flagtextview);
         eventNameET = findViewById(R.id.eventNameET);
-        timeButton = findViewById(R.id.timeButton);
+        startingTimeButton = findViewById(R.id.startingTimeButton);
+        endingTimeButton = findViewById(R.id.startingTimeButton);
         dateButton = findViewById(R.id.datePickerButton);
     }
 
@@ -108,7 +113,7 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     }
 
 
-    public void popTimePicker(View view)
+    public void popStartTimePicker(View view)
     {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
         {
@@ -127,13 +132,44 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
                 }else{
                     minute = Integer.toString(selectedMinute);
                 }
-                time = LocalTime.parse(hour+ ":" + minute,timeFormat);
-                timeButton.setText(time.format(timeFormatter));
+                startTime = LocalTime.parse(hour+ ":" + minute,timeFormat);
+                startingTimeButton.setText(startTime.format(timeFormatter));
             }
         };
 
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, time.getHour(), time.getMinute(), true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, startTime.getHour(), startTime.getMinute(), true);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+    }
+
+    public void popEndTimePicker(View view)
+    {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
+            {
+                String hour;
+                String minute;
+                if(selectedHour<10){
+                    hour = "0"+Integer.toString(selectedHour);
+                }else{
+                    hour = Integer.toString(selectedHour);
+                }
+                if(selectedMinute<10){
+                    minute = "0"+Integer.toString(selectedMinute);
+                }else{
+                    minute = Integer.toString(selectedMinute);
+                }
+                endTime = LocalTime.parse(hour+ ":" + minute,timeFormat);
+                endingTimeButton.setText(startTime.format(timeFormatter));
+            }
+        };
+
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, startTime.getHour(), startTime.getMinute(), true);
 
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
@@ -142,7 +178,7 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     public void saveEventAction(View view) {
 
         String eventName = eventNameET.getText().toString();
-        Event newEvent = new Event(eventName, date, time,flag);
+        Event newEvent = new Event(eventName, date, startTime,endTime,flag);
         DatabasesManager.sendDataToDatabase(newEvent);
         finish();
     }
