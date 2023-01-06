@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:ems="5"
         android:inputType="number"
-        android:hint="Set repetition count"/>
+        android:text="0"
+       />
+
 
 </RelativeLayout>

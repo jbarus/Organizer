@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -65,10 +66,16 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
         spinner_flag.setOnItemSelectedListener(this);
         debug=findViewById(R.id.debugtextview);
         reSwitch=findViewById(R.id.switch1);
-        reSwitch.setOnClickListener(new View.OnClickListener() {
+        reSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                openDialog();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if(isChecked==true)
+                {
+
+                    openDialog();
+                }
+
+
             }
         });
     }
@@ -189,10 +196,38 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
 
     public void saveEventAction(View view) {
 
-        String eventName = eventNameET.getText().toString();
-        Event newEvent = new Event(eventName, date, startTime,endTime,flag);
-        DatabasesManager.sendDataToDatabase(newEvent);
-        finish();
+//       if (reSwitch.isActivated()) {
+          String repetitionnoumbertostring;
+          String itostring;
+if(reSwitch.isChecked()==true)
+{
+           for(int i=0; i<repetitionnumber; i++) {
+               repetitionnoumbertostring = Integer.toString(repetitionnumber);
+               itostring = Integer.toString(i + 1);
+               String eventName = eventNameET.getText().toString();
+               eventName = eventName + " powtórzenie " + itostring + " z " + repetitionnoumbertostring;
+              if(i!=0)
+              {
+                  date = date.plusDays(7);
+              }
+
+               Event newEvent = new Event(eventName, date, startTime, endTime, flag);
+               DatabasesManager.sendDataToDatabase(newEvent);
+               finish();
+           }
+
+           }
+else
+{
+    String eventName = eventNameET.getText().toString();
+    Event newEvent = new Event(eventName, date, startTime,endTime,flag);
+    DatabasesManager.sendDataToDatabase(newEvent);
+    finish();
+}
+
+
+
+
     }
 
     @Override
@@ -218,7 +253,7 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     public void applyText(String repetition) {
 
         repetitionnumber= Integer.parseInt(repetition);
-        debug.setText(repetition);
+
 
     }
 }
