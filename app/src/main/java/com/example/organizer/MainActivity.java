@@ -6,9 +6,9 @@ import static com.example.organizer.CalendarUtils.monthYearFromDate;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -27,14 +27,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
-
+    private Button import_button;
     ImageButton menuBtn;
 
     FirebaseAuth firebaseAuth;
@@ -52,7 +50,13 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
         menuBtn.setOnClickListener((v)->showMenu());
-
+        import_button=(Button) findViewById(R.id.button_importexport);
+        import_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openImportActivity();
+            }
+        });
     }
 
     private void initWidgets() {
@@ -139,6 +143,12 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
             CalendarUtils.selectedDate = date;
             setMonthView();
         }
+    }
+
+    public void openImportActivity()
+    {
+        Intent intent = new Intent(this, ImportExport.class );
+        startActivity(intent);
     }
 
     public void weeklyAction(View view) {

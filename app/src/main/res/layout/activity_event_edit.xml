@@ -66,6 +66,7 @@
         android:textColor="@color/black"
         android:textSize="30sp" />
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,6 +94,20 @@
     android:layout_gravity="center"
 
         />
+    <TextView
+        android:id="@+id/debugtextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:text="SPRQWDZAm"
+        />
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Set recurring event" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"

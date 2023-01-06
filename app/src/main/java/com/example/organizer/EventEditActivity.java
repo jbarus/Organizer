@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener  {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
     private Button startingTimeButton;
@@ -30,10 +31,14 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     private Button dateButton;
     private TextView flagtextview;
     private Spinner spinner_flag;
+    private TextView debug;
+    Switch reSwitch;
+    private LocalTime time = LocalTime.now();
     private LocalTime startTime = LocalTime.now();
     private LocalTime endTime = LocalTime.now();
     private LocalDate date = LocalDate.now();
     private String flag;
+    int repetitionnumber;
     int hour, minute;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
@@ -58,7 +63,14 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner_flag.setAdapter(adapter);
         spinner_flag.setOnItemSelectedListener(this);
-
+        debug=findViewById(R.id.debugtextview);
+        reSwitch=findViewById(R.id.switch1);
+        reSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
     }
 
     private void initWidgets() {
@@ -194,6 +206,19 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    public void openDialog()
+    {
+        Dialog_window dialog_window= new Dialog_window();
+        dialog_window.show(getSupportFragmentManager(),"dialog window");
+    }
+
+    @Override
+    public void applyText(String repetition) {
+
+        repetitionnumber= Integer.parseInt(repetition);
+        debug.setText(repetition);
 
     }
 }
