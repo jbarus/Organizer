@@ -37,6 +37,7 @@ public class DatabasesManager extends AppCompatActivity {
     public static void getDataFromFirebase(){
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://organizer-ccfd6-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
