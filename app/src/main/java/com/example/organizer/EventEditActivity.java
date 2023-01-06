@@ -36,7 +36,7 @@ public class  EventEditActivity extends AppCompatActivity implements AdapterView
     private LocalDate date = LocalDate.now();
     private String flag;
     int hour, minute;
-    int repetitionnumber;
+    int repetitionnumber=0;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -156,7 +156,7 @@ public class  EventEditActivity extends AppCompatActivity implements AdapterView
         String eventName = eventNameET.getText().toString();
         Event newEvent = new Event(eventName, date, time,flag);
         Event.eventsList.add(newEvent);
-        sqLiteManager.addNoteToDatabase(newEvent);
+       sqLiteManager.addNoteToDatabase(newEvent);
         finish();
     }
 
@@ -182,6 +182,7 @@ public class  EventEditActivity extends AppCompatActivity implements AdapterView
     @Override
     public void applyText(String repetition) {
 
+        repetitionnumber= Integer.parseInt(repetition);
          debug.setText(repetition);
     }
 }
