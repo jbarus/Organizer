@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,18 +23,20 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class  EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
     private Button timeButton;
     private Button dateButton;
     private TextView flagtextview;
+    private TextView debug;
+    Switch reSwitch;
     private Spinner spinner_flag;
     private LocalTime time = LocalTime.now();
     private LocalDate date = LocalDate.now();
     private String flag;
     int hour, minute;
-
+    int repetitionnumber;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -54,6 +57,14 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner_flag.setAdapter(adapter);
         spinner_flag.setOnItemSelectedListener(this);
+        reSwitch=findViewById(R.id.switch1);
+        debug=findViewById(R.id.debugtextview);
+        reSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
 
     }
 
@@ -161,5 +172,16 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+    public void openDialog()
+    {
+        Dialog_window dialog_window= new Dialog_window();
+        dialog_window.show(getSupportFragmentManager(),"dialog window");
+    }
+
+    @Override
+    public void applyText(String repetition) {
+
+         debug.setText(repetition);
     }
 }
