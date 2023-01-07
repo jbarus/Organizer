@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -90,12 +89,15 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     public void newEventAction(View view)
     {
-        startActivity(new Intent(this, EventEditActivity.class));
+        startActivity(new Intent(this, EventCreateActivity.class));
     }
 
     @Override
-    public void onEventClick() {
-        Toast.makeText(this, "Dziala", Toast.LENGTH_SHORT).show();
+    public void onEventClick(Event event) {
+
+        Event.selectedEvent = event;
+        startActivity(new Intent(this, EventViewActivity.class));
+
     }
 
     public void dailyAction(View view) {

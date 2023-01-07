@@ -24,7 +24,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-public class EventEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener  {
+public class EventCreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener  {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
     private Button startingTimeButton;
@@ -51,7 +51,7 @@ public class EventEditActivity extends AppCompatActivity implements AdapterView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_edit);
+        setContentView(R.layout.activity_event_create);
         initWidgets();
         startTime = LocalTime.now();
         endTime = LocalTime.now();

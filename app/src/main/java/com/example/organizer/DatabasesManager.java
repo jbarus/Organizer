@@ -71,7 +71,7 @@ public class DatabasesManager extends AppCompatActivity {
 
 
 
-    private static LocalDate getDateFromString(String string)
+    public static LocalDate getDateFromString(String string)
     {
         try
         {
@@ -83,7 +83,7 @@ public class DatabasesManager extends AppCompatActivity {
             return null;
         }
     }
-    private static LocalTime getTimeFromString(String string)
+    public static LocalTime getTimeFromString(String string)
     {
         try
         {
@@ -95,14 +95,14 @@ public class DatabasesManager extends AppCompatActivity {
             return null;
         }
     }
-    private static String getStringFromDate(LocalDate date)
+    public static String getStringFromDate(LocalDate date)
     {
         if(date == null)
             return null;
         return dateFormat.format(date);
     }
 
-    private static String getStringFromTime(LocalTime time)
+    public static String getStringFromTime(LocalTime time)
     {
         if(time == null)
             return null;
