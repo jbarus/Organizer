@@ -24,7 +24,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-public class EventCreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener  {
+public class EventCreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener, CheckDialog.checkDialoglistenet {
     private EditText eventNameET;
     private DatePickerDialog datePickerDialog;
     private Button startingTimeButton;
@@ -41,6 +41,7 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     private String flag;
     int repetitionnumber;
     int hour, minute;
+    boolean isyesclicked=false;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -196,36 +197,63 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
 
     public void saveEventAction(View view) {
 
-//       if (reSwitch.isActivated()) {
+
           String repetitionnoumbertostring;
           String itostring;
-if(reSwitch.isChecked()==true)
-{
-           for(int i=0; i<repetitionnumber; i++) {
-               repetitionnoumbertostring = Integer.toString(repetitionnumber);
-               itostring = Integer.toString(i + 1);
-               String eventName = eventNameET.getText().toString();
-               eventName = eventName + " powtórzenie " + itostring + " z " + repetitionnoumbertostring;
-              if(i!=0)
-              {
-                  date = date.plusDays(7);
-              }
 
-               Event newEvent = new Event(eventName, date, startTime, endTime, flag);
-               DatabasesManager.sendDataToDatabase(newEvent);
-               finish();
-           }
+        String eventName = eventNameET.getText().toString();
+        Event newEvent = new Event(eventName, date, startTime,endTime,flag);
+        if(!newEvent.isColliding()) {
+            if (reSwitch.isChecked() == true) {
+                for (int i = 0; i < repetitionnumber; i++) {
+                    repetitionnoumbertostring = Integer.toString(repetitionnumber);
+                    itostring = Integer.toString(i + 1);
 
-           }
-else
-{
-    String eventName = eventNameET.getText().toString();
-    Event newEvent = new Event(eventName, date, startTime,endTime,flag);
-    DatabasesManager.sendDataToDatabase(newEvent);
-    finish();
-}
+                    newEvent.setName(eventName + " powtórzenie " + itostring + " z " + repetitionnoumbertostring);
+                    if (i != 0) {
+                        newEvent.setDate(date.plusDays(7));
+                    }
 
 
+                    DatabasesManager.sendDataToDatabase(newEvent);
+                    finish();
+                }
+
+            } else {
+
+                DatabasesManager.sendDataToDatabase(newEvent);
+                finish();
+            }
+
+        }
+        else
+        {
+            openChechkDialog();
+            if(isyesclicked)
+            {
+                if (reSwitch.isChecked() == true) {
+                    for (int i = 0; i < repetitionnumber; i++) {
+                        repetitionnoumbertostring = Integer.toString(repetitionnumber);
+                        itostring = Integer.toString(i + 1);
+
+                        newEvent.setName(eventName + " powtórzenie " + itostring + " z " + repetitionnoumbertostring);
+                        if (i != 0) {
+                            newEvent.setDate(date.plusDays(7));
+                        }
+
+
+                        DatabasesManager.sendDataToDatabase(newEvent);
+                        finish();
+                    }
+
+                } else {
+
+                    DatabasesManager.sendDataToDatabase(newEvent);
+                    finish();
+                }
+
+            }
+        }
 
 
     }
@@ -255,5 +283,15 @@ else
         repetitionnumber= Integer.parseInt(repetition);
 
 
+    }
+    public void openChechkDialog()
+    {
+        CheckDialog checkDialog =new CheckDialog();
+        checkDialog.show(getSupportFragmentManager(),"check dialog");
+    }
+
+    @Override
+    public void onYesclciked() {
+        isyesclicked=true;
     }
 }

@@ -53,7 +53,36 @@ public class Event {
         this.flag=flag;
 
     }
+    public boolean isColliding()
+    {
 
+        boolean temp=false;
+        for(int i=0;i<eventsList.size();i++)
+        {
+
+            if(this.date.isEqual(eventsList.get(i).date))
+            {
+
+                if(this.endTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
+                {
+                    temp=true;
+                }
+                else if(this.startTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
+                {
+                    temp=true;
+                }
+                else if(this.startTime.isBefore(eventsList.get(i).endTime)&&this.endTime.isAfter(eventsList.get(i).endTime))
+                {
+                    temp=true;
+                }
+            }
+            else
+            {
+                temp=false;
+            }
+        }
+        return temp;
+    }
     public String getName() {
         return name;
     }
@@ -89,4 +118,6 @@ public class Event {
     public LocalTime getEndTime() {return endTime;}
 
     public void setEndTime(LocalTime endTime) {this.endTime = endTime;}
+
 }
+
