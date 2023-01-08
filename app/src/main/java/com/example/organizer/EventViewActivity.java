@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class EventViewActivity extends AppCompatActivity {
-    TextView titleTV,dateTV, startTimeTV, endTimeTV, flagTV;
+    TextView titleTV,dateTV, startTimeTV, endTimeTV, flagTV,NotesTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class EventViewActivity extends AppCompatActivity {
         startTimeTV = findViewById(R.id.startTimeTV);
         endTimeTV = findViewById(R.id.endTimeTV);
         flagTV = findViewById(R.id.flagTV);
+        NotesTV=findViewById(R.id.NotesTV);
     }
 
     private void setContent() {
@@ -32,6 +33,7 @@ public class EventViewActivity extends AppCompatActivity {
         startTimeTV.setText("Czas rozpoczęcia: " + DatabasesManager.getStringFromTime(Event.selectedEvent.getStartTime()));
         endTimeTV.setText("Czas zakończenia: " + DatabasesManager.getStringFromTime(Event.selectedEvent.getEndTime()));
         flagTV.setText("Flaga: " + Event.selectedEvent.getFlag());
+        NotesTV.setText("Notatka: " + Event.selectedEvent.getNotes());
     }
 
     public void EditEvent(View view) {

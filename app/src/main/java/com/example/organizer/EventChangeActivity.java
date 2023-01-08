@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 public class EventChangeActivity extends AppCompatActivity {
-    EditText titleET, dateET, startTimeET, endTimeET, flagET;
+    EditText titleET, dateET, startTimeET, endTimeET, flagET, NotesET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class EventChangeActivity extends AppCompatActivity {
         startTimeET = findViewById(R.id.startTimeET);
         endTimeET = findViewById(R.id.endTimeET);
         flagET = findViewById(R.id.flagET);
+        NotesET = findViewById(R.id.NotesET);
     }
 
     private void setContent() {
@@ -31,6 +32,7 @@ public class EventChangeActivity extends AppCompatActivity {
         startTimeET.setText(DatabasesManager.getStringFromTime(Event.selectedEvent.getStartTime()));
         endTimeET.setText(DatabasesManager.getStringFromTime(Event.selectedEvent.getEndTime()));
         flagET.setText(Event.selectedEvent.getFlag());
+        NotesET.setText(Event.selectedEvent.getNotes());
     }
 
     public void SaveEvent(View view) {
@@ -39,6 +41,7 @@ public class EventChangeActivity extends AppCompatActivity {
         Event.selectedEvent.setStartTime(DatabasesManager.getTimeFromString(startTimeET.getText().toString()));
         Event.selectedEvent.setEndTime(DatabasesManager.getTimeFromString(endTimeET.getText().toString()));
         Event.selectedEvent.setFlag(flagET.getText().toString());
+        Event.selectedEvent.setNotes(NotesET.getText().toString());
         finish();
     }
 }

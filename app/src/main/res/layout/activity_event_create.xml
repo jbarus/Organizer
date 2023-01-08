@@ -111,12 +111,36 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical" />
     </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginVertical="26dp"
+        android:backgroundTint="#B5B2B8"
+        android:background="@drawable/rounded_corner">
+
+        <EditText
+            android:id="@+id/Notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Notatka"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginVertical="8dp"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:minLines="5"
+            android:gravity="top"/>
+
+    </LinearLayout>
 
 </LinearLayout>

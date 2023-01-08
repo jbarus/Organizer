@@ -67,6 +67,16 @@
         app:layout_constraintTop_toBottomOf="@+id/endTimeET"
         android:layout_marginTop="20dp"/>
 
+    <EditText
+        android:id="@+id/NotesET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notatka:"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flagET"
+        android:layout_marginTop="20dp"/>
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

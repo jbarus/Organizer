@@ -37,22 +37,18 @@ public class Event {
     private LocalTime startTime;
     private LocalTime endTime;
     private String flag;
+    private String Notes;
 
-    public Event(String name, LocalDate date, LocalTime startTime, LocalTime endTime, String flag) {
+    public Event(String name, LocalDate date, LocalTime startTime, LocalTime endTime, String flag, String Notes) {
         this.name = name;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.flag = flag;
+        this.Notes=Notes;
     }
 
-    public Event(String name, LocalDate date, LocalTime time, String flag) {
-        this.name = name;
-        this.date = date;
-        this.startTime = time;
-        this.flag=flag;
 
-    }
     public boolean isColliding()
     {
 
@@ -90,6 +86,10 @@ public class Event {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getNotes() { return Notes; }
+
+    public void setNotes(String Notes) {this.Notes = Notes; }
 
     public LocalDate getDate() {
         return date;

@@ -26,6 +26,7 @@ import java.util.Calendar;
 
 public class EventCreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener, CheckDialog.checkDialoglistenet {
     private EditText eventNameET;
+    private EditText NotesET;
     private DatePickerDialog datePickerDialog;
     private Button startingTimeButton;
     private Button endingTimeButton;
@@ -87,6 +88,7 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
         startingTimeButton = findViewById(R.id.startingTimeButton);
         endingTimeButton = findViewById(R.id.startingTimeButton);
         dateButton = findViewById(R.id.datePickerButton);
+        NotesET=findViewById(R.id.Notes);
     }
 
     private void initDatePicker()
@@ -202,7 +204,8 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
           String itostring;
 
         String eventName = eventNameET.getText().toString();
-        Event newEvent = new Event(eventName, date, startTime,endTime,flag);
+        String Notes=NotesET.getText().toString();
+        Event newEvent = new Event(eventName, date, startTime,endTime,flag,Notes);
         if(!newEvent.isColliding()) {
             if (reSwitch.isChecked() == true) {
                 for (int i = 0; i < repetitionnumber; i++) {
