@@ -38,6 +38,7 @@ public class DatabasesManager extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Event newEvent = new Event(dataSnapshot.getKey().toString(),getDateFromString(dataSnapshot.child("Date").getValue().toString()),getTimeFromString(dataSnapshot.child("StartTime").getValue().toString()),getTimeFromString(dataSnapshot.child("EndTime").getValue().toString()),dataSnapshot.child("Flag").getValue().toString(),dataSnapshot.child("Note").getValue().toString());
+                   newEvent.setNotificationID(Integer.parseInt(dataSnapshot.child("NotificationID").getValue().toString()));
                     boolean exist = false;
                     for ( Event event : Event.eventsList){
                         if(newEvent.getName() == event.getName()){
@@ -64,6 +65,7 @@ public class DatabasesManager extends AppCompatActivity {
         hashMap.put("EndTime",getStringFromTime(newEvent.getEndTime()));
         hashMap.put("Flag",newEvent.getFlag());
         hashMap.put("Note",newEvent.getNotes());
+        hashMap.put("NotificationID",Integer.toString(newEvent.getNotificationID()));
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://organizer-ccfd6-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference myRef = database.getReference();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -78,6 +80,7 @@ public class DatabasesManager extends AppCompatActivity {
         hashMap.put("EndTime",getStringFromTime(updatedEvent.getEndTime()));
         hashMap.put("Flag",updatedEvent.getFlag());
         hashMap.put("Note",updatedEvent.getNotes());
+        hashMap.put("NotificationID",Integer.toString(updatedEvent.getNotificationID()));
         if(wasOutdated){
             Event.eventsList.add(updatedEvent);
         }

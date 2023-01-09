@@ -2,9 +2,18 @@ package com.example.organizer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Random;
 
 public class EventChangeActivity extends AppCompatActivity {
     EditText titleET, dateET, startTimeET, endTimeET, flagET, NotesET;
@@ -44,6 +53,29 @@ public class EventChangeActivity extends AppCompatActivity {
         Event.selectedEvent.setFlag(flagET.getText().toString());
         Event.selectedEvent.setNotes(NotesET.getText().toString());
         DatabasesManager.updateDataInDatabase(Event.selectedEvent,oldName);
+        cacnleAlarm(Event.selectedEvent);
+        startAlarm(Event.selectedEvent);
         finish();
+    }
+    private void startAlarm(Event event)
+    {
+
+        LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime().minusHours(1));
+        ZoneId zone=ZoneId.of("Europe/Berlin");
+        Instant i = lDT.toInstant(zone.getRules().getOffset(Instant.now()));
+        Long millis = i.toEpochMilli();
+        AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,event.getNotificationID(),intent,PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,millis ,pendingIntent );
+    }
+
+    private void cacnleAlarm(Event event)
+    {
+        AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,event.getNotificationID(),intent,PendingIntent.FLAG_IMMUTABLE);
+
+        alarmManager.cancel(pendingIntent);
     }
 }

@@ -31,6 +31,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Random;
 
 public class EventCreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener, CheckDialog.checkDialoglistenet {
     private EditText eventNameET;
@@ -309,20 +310,22 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
 
     private void startAlarm(Event event)
     {
-       LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime());
+        Random random = new Random();
+        event.setNotificationID(random.nextInt(100000));
+        LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime().minusHours(1));
        ZoneId zone=ZoneId.of("Europe/Berlin");
         Instant i = lDT.toInstant(zone.getRules().getOffset(Instant.now()));
         Long millis = i.toEpochMilli();
         AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,3,intent,PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,event.getNotificationID(),intent,PendingIntent.FLAG_IMMUTABLE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,millis ,pendingIntent );
     }
-    private void cacnleAlarm()
+    private void cacnleAlarm(Event event)
     {
         AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,5,intent,PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,event.getNotificationID(),intent,PendingIntent.FLAG_IMMUTABLE);
 
         alarmManager.cancel(pendingIntent);
     }

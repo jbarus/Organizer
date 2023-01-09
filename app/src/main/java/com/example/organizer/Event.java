@@ -38,14 +38,16 @@ public class Event {
     private LocalTime endTime;
     private String flag;
     private String Notes;
+    private int NotificationID;
 
-    public Event(String name, LocalDate date, LocalTime startTime, LocalTime endTime, String flag, String Notes) {
+    public Event(String name, LocalDate date, LocalTime startTime, LocalTime endTime, String flag, String Notes ) {
         this.name = name;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.flag = flag;
         this.Notes=Notes;
+       // this.NotificationID=notificationID;
     }
 
 
@@ -137,5 +139,8 @@ public class Event {
 
     public void setEndTime(LocalTime endTime) {this.endTime = endTime;}
 
+    public int getNotificationID() {return NotificationID;}
+
+    public void setNotificationID(int notificationID) {NotificationID = notificationID;}
 }
 
