@@ -36,12 +36,14 @@ public class EventChangeActivity extends AppCompatActivity {
     }
 
     public void SaveEvent(View view) {
+        String oldName = Event.selectedEvent.getName();
         Event.selectedEvent.setName(titleET.getText().toString());
         Event.selectedEvent.setDate(DatabasesManager.getDateFromString(dateET.getText().toString()));
         Event.selectedEvent.setStartTime(DatabasesManager.getTimeFromString(startTimeET.getText().toString()));
         Event.selectedEvent.setEndTime(DatabasesManager.getTimeFromString(endTimeET.getText().toString()));
         Event.selectedEvent.setFlag(flagET.getText().toString());
         Event.selectedEvent.setNotes(NotesET.getText().toString());
+        DatabasesManager.updateDataInDatabase(Event.selectedEvent,oldName);
         finish();
     }
 }
