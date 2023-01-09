@@ -2,9 +2,13 @@ package com.example.organizer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,8 +23,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
@@ -217,13 +225,13 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
                         newEvent.setDate(date.plusDays(7));
                     }
 
-
+                    startAlarm(newEvent);
                     DatabasesManager.sendDataToDatabase(newEvent);
                     finish();
                 }
 
             } else {
-
+                startAlarm(newEvent);
                 DatabasesManager.sendDataToDatabase(newEvent);
                 finish();
             }
@@ -244,13 +252,13 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
                             newEvent.setDate(date.plusDays(7));
                         }
 
-
+                        startAlarm(newEvent);
                         DatabasesManager.sendDataToDatabase(newEvent);
                         finish();
                     }
 
                 } else {
-
+                    startAlarm(newEvent);
                     DatabasesManager.sendDataToDatabase(newEvent);
                     finish();
                 }
@@ -296,5 +304,26 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onYesclciked() {
         isyesclicked=true;
+    }
+
+
+    private void startAlarm(Event event)
+    {
+       LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime());
+       ZoneId zone=ZoneId.of("Europe/Berlin");
+        Instant i = lDT.toInstant(zone.getRules().getOffset(Instant.now()));
+        Long millis = i.toEpochMilli();
+        AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,3,intent,PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,millis ,pendingIntent );
+    }
+    private void cacnleAlarm()
+    {
+        AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,5,intent,PendingIntent.FLAG_IMMUTABLE);
+
+        alarmManager.cancel(pendingIntent);
     }
 }

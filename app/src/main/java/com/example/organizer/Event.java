@@ -56,21 +56,39 @@ public class Event {
         for(int i=0;i<eventsList.size();i++)
         {
 
+           if(temp)
+           {
+               break;
+           }
             if(this.date.isEqual(eventsList.get(i).date))
             {
 
-                if(this.endTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
+
+                if(this.startTime.isAfter(eventsList.get(i).endTime) && this.endTime.isAfter(eventsList.get(i).endTime))
+                {
+                    temp=false;
+                }
+                else if(this.startTime.isBefore(eventsList.get(i).startTime) && this.endTime.isBefore(eventsList.get(i).startTime))
                 {
                     temp=true;
                 }
-                else if(this.startTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
+                else
                 {
-                    temp=true;
+                        temp=false;
                 }
-                else if(this.startTime.isBefore(eventsList.get(i).endTime)&&this.endTime.isAfter(eventsList.get(i).endTime))
-                {
-                    temp=true;
-                }
+
+//                if(this.endTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
+//                {
+//                    temp=true;
+//                }
+//                else if(this.startTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
+//                {
+//                    temp=true;
+//                }
+//                else if(this.startTime.isBefore(eventsList.get(i).endTime)&&this.endTime.isAfter(eventsList.get(i).endTime))
+//                {
+//                    temp=true;
+//                }
             }
             else
             {
