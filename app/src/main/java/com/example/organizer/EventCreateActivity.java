@@ -312,7 +312,7 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     {
         Random random = new Random();
         event.setNotificationID(random.nextInt(100000));
-        LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime().minusHours(1));
+        LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime().minusHours(2));
        ZoneId zone=ZoneId.of("Europe/Berlin");
         Instant i = lDT.toInstant(zone.getRules().getOffset(Instant.now()));
         Long millis = i.toEpochMilli();

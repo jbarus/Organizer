@@ -22,7 +22,6 @@ public class DatabasesManager extends AppCompatActivity {
     private static FirebaseUser firebaseUser;
 
     public static boolean wasLoaded= false;
-    private static boolean wasOutdated = false;
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ISO_LOCAL_DATE;
     private static final DateTimeFormatter timeFormat = DateTimeFormatter.ISO_LOCAL_TIME;
@@ -74,21 +73,11 @@ public class DatabasesManager extends AppCompatActivity {
     }
 
     public static void updateDataInDatabase(Event updatedEvent, String oldName){
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("Date",getStringFromDate(updatedEvent.getDate()));
-        hashMap.put("StartTime",getStringFromTime(updatedEvent.getStartTime()));
-        hashMap.put("EndTime",getStringFromTime(updatedEvent.getEndTime()));
-        hashMap.put("Flag",updatedEvent.getFlag());
-        hashMap.put("Note",updatedEvent.getNotes());
-        hashMap.put("NotificationID",Integer.toString(updatedEvent.getNotificationID()));
-        if(wasOutdated){
-            Event.eventsList.add(updatedEvent);
-        }
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://organizer-ccfd6-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(firebaseUser.getUid());
         databaseReference.child(oldName).removeValue();
-        databaseReference.child(updatedEvent.getName()).setValue(hashMap);
+        sendDataToDatabase(updatedEvent);
 
     }
 

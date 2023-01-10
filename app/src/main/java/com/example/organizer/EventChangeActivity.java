@@ -60,7 +60,7 @@ public class EventChangeActivity extends AppCompatActivity {
     private void startAlarm(Event event)
     {
 
-        LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime().minusHours(1));
+        LocalDateTime lDT=LocalDateTime.of(event.getDate(), event.getStartTime().minusHours(2));
         ZoneId zone=ZoneId.of("Europe/Berlin");
         Instant i = lDT.toInstant(zone.getRules().getOffset(Instant.now()));
         Long millis = i.toEpochMilli();
