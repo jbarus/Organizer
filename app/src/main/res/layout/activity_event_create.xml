@@ -79,14 +79,6 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-       android:id="@+id/flagtextview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No flag chosen"
-        android:layout_gravity="center"
-        android:textColor="@color/black"
-        />
     <Spinner
       android:id="@+id/spinner_flag"
         android:layout_width="wrap_content"
@@ -94,14 +86,7 @@
     android:layout_gravity="center"
 
         />
-    <TextView
-        android:id="@+id/debugtextview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:text="SPRQWDZAm"
-        />
+
     <Switch
         android:id="@+id/switch1"
         android:layout_width="wrap_content"

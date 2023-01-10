@@ -34,23 +34,16 @@ import java.util.Calendar;
 import java.util.Random;
 
 public class EventCreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,  Dialog_window.Dialog_windowListener, CheckDialog.checkDialoglistenet {
-    private EditText eventNameET;
-    private EditText NotesET;
+    private EditText eventNameET, NotesET;
     private DatePickerDialog datePickerDialog;
-    private Button startingTimeButton;
-    private Button endingTimeButton;
-    private Button dateButton;
-    private TextView flagtextview;
+    private Button startingTimeButton, endingTimeButton, dateButton;
     private Spinner spinner_flag;
-    private TextView debug;
     Switch reSwitch;
-    private LocalTime time = LocalTime.now();
     private LocalTime startTime = LocalTime.now();
     private LocalTime endTime = LocalTime.now();
     private LocalDate date = CalendarUtils.selectedDate;
     private String flag;
     int repetitionnumber;
-    int hour, minute;
     boolean isyesclicked=false;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
@@ -64,8 +57,6 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_create);
         initWidgets();
-        startTime = LocalTime.now();
-        endTime = LocalTime.now();
         initDatePicker();
         dateButton.setText(date.format(dateFormatter));
         startingTimeButton.setText(startTime.format(timeFormatter));
@@ -75,8 +66,6 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner_flag.setAdapter(adapter);
         spinner_flag.setOnItemSelectedListener(this);
-        debug=findViewById(R.id.debugtextview);
-        reSwitch=findViewById(R.id.switch1);
         reSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -92,12 +81,12 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void initWidgets() {
-        flagtextview =findViewById(R.id.flagtextview);
         eventNameET = findViewById(R.id.eventNameET);
         startingTimeButton = findViewById(R.id.startingTimeButton);
         endingTimeButton = findViewById(R.id.startingTimeButton);
         dateButton = findViewById(R.id.datePickerButton);
         NotesET=findViewById(R.id.Notes);
+        reSwitch=findViewById(R.id.switch1);
     }
 
     private void initDatePicker()
@@ -276,7 +265,6 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
         Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
 
         flag=spinner_flag.getSelectedItem().toString();
-        flagtextview.setText(flag);
     }
 
     @Override
