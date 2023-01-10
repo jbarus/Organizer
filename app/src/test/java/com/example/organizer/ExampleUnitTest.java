@@ -33,7 +33,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void previousMonthAction_isCorect(){
+    public void CreatingEvent_isCorect(){
         Event event = new Event("Test",LocalDate.now(),LocalTime.now(),LocalTime.of(20,20,20),"Sport","Notatka");
         String expected = "Test";
         String actual = event.getName();

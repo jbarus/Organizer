@@ -47,7 +47,7 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     private LocalTime time = LocalTime.now();
     private LocalTime startTime = LocalTime.now();
     private LocalTime endTime = LocalTime.now();
-    private LocalDate date = LocalDate.now();
+    private LocalDate date = CalendarUtils.selectedDate;
     private String flag;
     int repetitionnumber;
     int hour, minute;
