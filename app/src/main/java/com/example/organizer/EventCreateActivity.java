@@ -39,8 +39,8 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     private Button startingTimeButton, endingTimeButton, dateButton;
     private Spinner spinner_flag;
     Switch reSwitch;
-    private LocalTime startTime = LocalTime.now();
-    private LocalTime endTime = LocalTime.now();
+    private LocalTime startTime = LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute());
+    private LocalTime endTime = LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute());
     private LocalDate date = CalendarUtils.selectedDate;
     private String flag;
     int repetitionnumber;
@@ -83,7 +83,7 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
     private void initWidgets() {
         eventNameET = findViewById(R.id.eventNameET);
         startingTimeButton = findViewById(R.id.startingTimeButton);
-        endingTimeButton = findViewById(R.id.startingTimeButton);
+        endingTimeButton = findViewById(R.id.endingTimeButton);
         dateButton = findViewById(R.id.datePickerButton);
         NotesET=findViewById(R.id.Notes);
         reSwitch=findViewById(R.id.switch1);
@@ -184,12 +184,12 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
                     minute = Integer.toString(selectedMinute);
                 }
                 endTime = LocalTime.parse(hour+ ":" + minute,timeFormat);
-                endingTimeButton.setText(startTime.format(timeFormatter));
+                endingTimeButton.setText(endTime.format(timeFormatter));
             }
         };
 
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, startTime.getHour(), startTime.getMinute(), true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener, endTime.getHour(), endTime.getMinute(), true);
 
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
@@ -309,12 +309,5 @@ public class EventCreateActivity extends AppCompatActivity implements AdapterVie
         PendingIntent pendingIntent =PendingIntent.getBroadcast(this,event.getNotificationID(),intent,PendingIntent.FLAG_IMMUTABLE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,millis ,pendingIntent );
     }
-    private void cacnleAlarm(Event event)
-    {
-        AlarmManager alarmManager = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
-        Intent intent=new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent =PendingIntent.getBroadcast(this,event.getNotificationID(),intent,PendingIntent.FLAG_IMMUTABLE);
 
-        alarmManager.cancel(pendingIntent);
-    }
 }

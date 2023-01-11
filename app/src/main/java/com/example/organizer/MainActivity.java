@@ -50,13 +50,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
         menuBtn.setOnClickListener((v)->showMenu());
-        import_button=(Button) findViewById(R.id.button_importexport);
-        import_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImportActivity();
-            }
-        });
+
     }
 
     private void initWidgets() {
@@ -146,11 +140,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         }
     }
 
-    public void openImportActivity()
-    {
-        Intent intent = new Intent(this, ImportExport.class );
-        startActivity(intent);
-    }
+
 
     public void weeklyAction(View view) {
         startActivity(new Intent(this,WeekViewActivity.class));
