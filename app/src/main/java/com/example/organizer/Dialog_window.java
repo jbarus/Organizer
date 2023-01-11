@@ -25,7 +25,7 @@ public class Dialog_window extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog,null);
         editText=view.findViewById(R.id.editTextNumber);
-        builder.setView(view).setTitle("Seting Repetition").setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+        builder.setView(view).setTitle("Ustaw ilość powtórzeń").setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

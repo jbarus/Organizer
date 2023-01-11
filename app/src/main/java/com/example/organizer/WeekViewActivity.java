@@ -17,30 +17,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, EventAdapter.OnEventListener
-{
+public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, EventAdapter.OnEventListener {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private RecyclerView eventRecyclerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
         initWidgets();
         setWeekView();
     }
 
-    private void initWidgets()
-    {
+    private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
         eventRecyclerView = findViewById(R.id.eventRecyclerView);
     }
 
-    private void setWeekView()
-    {
+    private void setWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.selectedDate);
 
@@ -52,34 +48,29 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
 
-    public void previousWeekAction(View view)
-    {
+    public void previousWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
         setWeekView();
     }
 
-    public void nextWeekAction(View view)
-    {
+    public void nextWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusWeeks(1);
         setWeekView();
     }
 
     @Override
-    public void onItemClick(int position, LocalDate date)
-    {
+    public void onItemClick(int position, LocalDate date) {
         CalendarUtils.selectedDate = date;
         setWeekView();
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         setEventView();
     }
 
-    private void setEventView()
-    {
+    private void setEventView() {
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(dailyEvents, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -87,8 +78,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         eventRecyclerView.setAdapter(eventAdapter);
     }
 
-    public void newEventAction(View view)
-    {
+    public void newEventAction(View view) {
         startActivity(new Intent(this, EventCreateActivity.class));
     }
 
@@ -100,7 +90,4 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     }
 
-    public void dailyAction(View view) {
-        startActivity(new Intent(this, DailyCalendarActivity.class));
-    }
 }

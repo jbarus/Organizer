@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Name:"
+        android:text="Nazwa:"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp" />
@@ -48,7 +48,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:onClick="popStartTimePicker"
-        android:text="Select Time"
+        android:text="Wybierz godzinę rozpoczęcia"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp" />
@@ -61,23 +61,13 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:onClick="popEndTimePicker"
-        android:text="Select Time"
+        android:text="Wybierz godzinę końca"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@null"
-        android:onClick="saveEventAction"
-        android:text="Save"
-        android:textColor="@color/purple_200"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+
 
     <Spinner
       android:id="@+id/spinner_flag"
@@ -92,7 +82,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Set recurring event" />
+        android:text="Ustaw powtarzanie wydarzenia" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:onClick="saveEventAction"
+        android:text="Zapisz"
+        android:textColor="@color/purple_200"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"

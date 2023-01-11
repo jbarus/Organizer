@@ -56,57 +56,57 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SUN"
+            android:text="NDZ"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="MON"
+            android:text="PON"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TUE"
+            android:text="WTO"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="WED"
+            android:text="ŚRO"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="THUR"
+            android:text="CZW"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="FRI"
+            android:text="PT"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SAT"
+            android:text="SOB"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
 
     </LinearLayout>
@@ -123,7 +123,7 @@
         android:layout_gravity="center"
         android:background="@null"
         android:onClick="newEventAction"
-        android:text="New Event"
+        android:text="Nowe Wydarzenie"
         android:textColor="@color/purple_200"
         android:textSize="20sp"
         android:textStyle="bold" />
