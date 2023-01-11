@@ -66,31 +66,25 @@ public class Event {
             {
 
 
-                if(this.startTime.isAfter(eventsList.get(i).endTime) && this.endTime.isAfter(eventsList.get(i).endTime))
+
+                if(this.endTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
                 {
-                    temp=false;
+                    return true;
                 }
-                else if(this.startTime.isBefore(eventsList.get(i).startTime) && this.endTime.isBefore(eventsList.get(i).startTime))
+                else if(this.startTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
                 {
-                    temp=true;
+                    return true;
                 }
-                else
+                else if(this.startTime.isBefore(eventsList.get(i).endTime)&&this.endTime.isAfter(eventsList.get(i).endTime))
                 {
-                        temp=false;
+                    return true;
+                }
+                else if(this.startTime.isBefore(eventsList.get(i).startTime)&&this.endTime.isAfter(eventsList.get(i).endTime))
+                {
+                    return true;
                 }
 
-//                if(this.endTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
-//                {
-//                    temp=true;
-//                }
-//                else if(this.startTime.isAfter(eventsList.get(i).startTime)&&this.endTime.isBefore(eventsList.get(i).endTime))
-//                {
-//                    temp=true;
-//                }
-//                else if(this.startTime.isBefore(eventsList.get(i).endTime)&&this.endTime.isAfter(eventsList.get(i).endTime))
-//                {
-//                    temp=true;
-//                }
+
             }
             else
             {
